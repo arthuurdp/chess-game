@@ -4,19 +4,17 @@ import boardgame.Board;
 import chess.ChessPiece;
 import chess.enums.Color;
 
-public class King extends ChessPiece {
-    public King(Board board, Color color){
+public class Knight extends ChessPiece {
+    public Knight(Board board, Color color) {
         super(board, color);
     }
 
-    @Override
     public String toString() {
-        return "K";
+        return "N";
     }
 
     @Override
     public boolean[][] possibleMoves() {
-        boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
-        return mat;
+        return new boolean[0][];
     }
 }
