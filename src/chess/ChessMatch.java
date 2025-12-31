@@ -11,10 +11,20 @@ import chess.pieces.Rook;
 
 public class ChessMatch {
     private Board board;
+    private Integer turn;
+    private Color currentPlayer;
 
     public ChessMatch() {
         board = new Board(8, 8);
         initialSetup();
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public Color getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public ChessPiece[][] getPieces() {
@@ -35,6 +45,7 @@ public class ChessMatch {
         Position source = sourcePosition.toPosition();
         Position target = targetPosition.toPosition();
         validateSourcePosition(source);
+        validateTargetPosition(source, target);
         Piece piece = makeMove(source, target);
         return (ChessPiece) piece;
     }
@@ -53,6 +64,18 @@ public class ChessMatch {
         if (!board.piece(source).isThereAnyPossibleMove()) {
             throw new ChessException("There´s no possible moves for this piece.");
         }
+    }
+
+    private void validateTargetPosition(Position source, Position target) {
+        if (!board.piece(source).possibleMove(target)) {
+            throw new ChessException("The chosen piece cannot be moved.");
+        }
+    }
+
+    public boolean[][] possibleMoves(ChessPosition sourcePosition) {
+        Position p = sourcePosition.toPosition();
+        validateSourcePosition(p);
+        return board.piece(p).possibleMoves();
     }
 
     private void initialSetup() {
