@@ -16,6 +16,8 @@ public class ChessMatch {
 
     public ChessMatch() {
         board = new Board(8, 8);
+        turn = 1;
+        currentPlayer = Color.WHITE;
         initialSetup();
     }
 
@@ -47,6 +49,7 @@ public class ChessMatch {
         validateSourcePosition(source);
         validateTargetPosition(source, target);
         Piece piece = makeMove(source, target);
+        nextTurn();
         return (ChessPiece) piece;
     }
 
@@ -57,11 +60,14 @@ public class ChessMatch {
         return targetPiece;
     }
 
-    private void validateSourcePosition(Position source) {
-        if (!board.positionExists(source)) {
-            throw new ChessException("Error moving piece: source position (" + source.getRow() + ", " + source.getColumn() + ") does not exist or does not contain a piece");
+    private void validateSourcePosition(Position position) {
+        if (!board.positionExists(position)) {
+            throw new ChessException("Error moving piece: source position (" + position.getRow() + ", " + position.getColumn() + ") does not exist or does not contain a piece");
         }
-        if (!board.piece(source).isThereAnyPossibleMove()) {
+        if (currentPlayer != ((ChessPiece)board.piece(position)).getColor()) {
+            throw new ChessException("The chosen piece isn´t yours");
+        }
+        if (!board.piece(position).isThereAnyPossibleMove()) {
             throw new ChessException("There´s no possible moves for this piece.");
         }
     }
@@ -70,6 +76,11 @@ public class ChessMatch {
         if (!board.piece(source).possibleMove(target)) {
             throw new ChessException("The chosen piece cannot be moved.");
         }
+    }
+
+    private void nextTurn() {
+        turn++;
+        currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
     }
 
     public boolean[][] possibleMoves(ChessPosition sourcePosition) {
