@@ -25,6 +25,9 @@ public class King extends ChessPiece {
     }
 
     private boolean testRookCastling(Position position) {
+        if (!getBoard().positionExists(position)) {
+            return false;
+        }
         ChessPiece piece = (ChessPiece)getBoard().piece(position);
         return piece != null && piece instanceof Rook && piece.getColor() == getColor() && piece.getMoveCount() == 0;
     }
