@@ -31,5 +31,5 @@ It´s important to say that part of this project was a module of "Nelio Alves - 
 For me, this project was a great way to learn more about OOP, Inheritance, Logic, get started with Swing and how to implement it in a real project.
 
 ## GUI Preview:
-![img.png](img.png)
+![gui.png](gui.png)
 
